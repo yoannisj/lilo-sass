@@ -1,0 +1,6 @@
+dest: ./sassdoc
+package: ./package.json
+theme: default
+groups:
+  lilo-register: Register
+  lilo-share: Share
