@@ -1,0 +1,34 @@
+// =============================================================================
+// =LILO - FETCH
+// =============================================================================
+////
+//// @group lilo-register
+//// @author [Yoannis Jamar](http://yoannis.me)
+
+@import "aleksi/maps/map-find";
+@import "lilo/register/get";
+
+// =_lilo-fetch( $identifier, $args... )
+// -----------------------------------------------------------------------------
+/// Verify if styles are present in Lilo's registery, and return the
+/// corresponding token. If the `$identifier`, `$args` pair was never registered
+/// before, it will return `null`.
+///
+/// @param {string} $identifier - A unique identifier for the shared styles.
+/// @param {arglist} $args... [()] - Settings for dynamic styles.
+///
+/// @return {string} - A unique token for to the `$identifier`, `$args` pair.
+///
+/// @access private
+/// @since 0.1.0
+///
+/// @todo Unit-test _lilo-fetch() function
+
+@function _lilo-fetch( $identifier, $args... )
+{
+  $register: _lilo-get();
+  $entry: map-get($register, $identifier);
+
+  // return token corresponding to the `$identifier`, `$args` pair.
+  @return if($entry, map-find-key($entry, $args), null);
+}

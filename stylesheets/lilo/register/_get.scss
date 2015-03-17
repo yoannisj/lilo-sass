@@ -1,0 +1,30 @@
+// =============================================================================
+// =LILO - GET
+// =============================================================================
+////
+//// @group lilo-register
+//// @author [Yoannis Jamar](http://yoannis.me)
+
+@import "aleksi/maps/is-map";
+
+// =_lilo-get()
+// -----------------------------------------------------------------------------
+/// Returns Lilo's register, containing info about currently registered styles.
+/// Uses a [functional wrapper](http://www.sitepoint.com/functional-wrappers-sass/)
+/// to limit the end-user's ability to edit and break the register.
+///
+/// @return {map} - Lilo's current register
+///
+/// @access private
+/// @since 0.1.0
+///
+/// @todo Unit-test _lilo-get() function
+
+@function _lilo-get()
+{
+  @if global-variable-exists('__lilo-register__') and is-map($__lilo-register__) {
+    @return $__lilo-register__;
+  }
+
+  @return ();
+}

@@ -14,12 +14,14 @@ module.exports = function(grunt) {
       test: {
         options: {
           style: 'expanded',
-          quiet: true,
+          quiet: false,
           compass: true,
           sourcemap: 'none',
           loadPath: [
-            './node_modules/bootcamp/dist',
             './stylesheets'
+          ],
+          require: [
+            'aleksi'
           ]
         },
         files: {
@@ -28,26 +30,17 @@ module.exports = function(grunt) {
       }
     },
 
-    // Bootcamp
-    bootcamp: {
-      test: {
-        files: {
-          src: ['./tmp/results.css']
-        }
-      }
-    },
-
     // Watch
     watch: {
       dist: {
         files: ['./**/*.scss'],
-        tasks: ['sass', 'bootcamp']
+        tasks: ['sass']
       }
     }
   });
 
   // Tasks
-  grunt.registerTask('default', ['sass', 'bootcamp', 'watch']);
-  grunt.registerTask('test',    ['sass:test', 'bootcamp']);
+  grunt.registerTask('default', ['sass', 'watch']);
+  grunt.registerTask('test',    ['sass:test']);
 
 };

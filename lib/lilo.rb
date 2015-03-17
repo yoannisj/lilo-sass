@@ -1,5 +1,6 @@
 require 'compass/import-once/activate'
 # Require additional compass plugins here
+require 'aleksi'
 
 # Extension Paths
 extension_path = File.expand_path(File.join(File.dirname(__FILE__), ".."))

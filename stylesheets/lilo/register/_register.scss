@@ -1,0 +1,46 @@
+// =============================================================================
+// =LILO - REGISTER
+// =============================================================================
+////
+//// @group lilo-register
+//// @author [Yoannis Jamar](http://yoannis.me)
+
+@import "sassy-maps";
+@import "lilo/register/fetch";
+@import "lilo/register/get";
+@import "lilo/register/set";
+
+// =_lilo-register( $identifier[, $args... ])
+// -----------------------------------------------------------------------------
+/// Register an identifier with associated arguments to Lilo's register, so it
+/// can be retrieved and shared later on. It will make sure there are no
+/// duplicate `$identifier`, `$args` pairs in the register, and if the pair was
+/// already registered earlier, it will return `false`.
+///
+/// @param {string} $identifier - A unique identifier for the shared styles.
+/// @param {arglist} $args... [()] - Settings for dynamic styles.
+///
+/// @return {bool} - Whether the `$identifier`, `$args` was newly added to the register.
+/// @throw Error if `$identifier` is not a string.
+///
+/// @access private
+/// @since 0.1.0
+///
+/// @todo Unit-test _lilo-register() function
+
+@function _lilo-register( $identifier, $args... )
+{
+  @if type-of($identifier) != string {
+    @return throw-error('_lilo-register():: $identifier must be a string. Was #{inspect($identifier)}.');
+  }
+
+  // only add a new entry if none was already registered before with
+  // same identifier and arguments
+  @if not _lilo-fetch($identifier, $args...) {
+    // add the entry to Lilo's register and confirm if it was successful.
+    @return _lilo-set(map-set-deep( _lilo-get(), $identifier unique-id(), $args));
+  }
+
+  // announce that `$identifier`, '$args' pair was already registered before
+  @return false;
+}
