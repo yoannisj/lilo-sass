@@ -1,0 +1,33 @@
+// =============================================================================
+// =LILO - REGISTER
+// =============================================================================
+//// Register a set of styles, so it can be identified and extended later on.
+////
+//// @group Register
+//// @author [Yoannis Jamar](http://yoannis.me)
+
+@import "lilo/fetch";
+
+// make sure the global register exists
+$__lilo-register__: () !default;
+
+// =lilo-register( $identifier, $args... )
+// -----------------------------------------------------------------------------
+
+@function lilo-register( $identifier, $args... )
+{
+  @if type-of($identifier) != string {
+    @return throw-error('lilo-register():: $identifier must be a string. Was #{inspect($identifier)}.');
+  }
+
+  // only add a new entry if none was already registered before with
+  // same identifier and arguments
+  @if not lilo-fetch( $identifier, $args ) {
+    $entry: ( #{unique-id()}: $args );
+
+    // add the entry to Lilo's register.
+    $__lilo-register__: map-set( $__lilo-register__, $identifier, $entry );
+  }
+
+  @return true;
+}
