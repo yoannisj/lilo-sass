@@ -1,0 +1,25 @@
+# MAC OSX
+# -------
+.DS_Store
+
+# TEMPORARY FILES
+# ---------------
+tmp
+
+# SASS/COMPASS
+# ------------
+.sass-cache
+*.sassc
+*.scssc
+
+# RUBY GEMS
+# ---------
+*.gem
+
+# NODE MODULES
+# ------------
+node_modules
+
+# SASSDOC
+# -------
+sassdoc
