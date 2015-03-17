@@ -2,11 +2,31 @@
 // =ALEKSI - TESTS
 // =============================================================================
 
-@import "bootcamp";
 @import "../stylesheets/lilo";
+@import "aleksi/maps/debug-map";
 
-@include runner-start;
+@mixin color-scheme( $text, $background ) {
+  color: $text;
+  background-color: $background;
+}
 
-// Import individual test files here
+@mixin -color-scheme( $text, $background ) {
+  @include lilo('color-scheme', $text, $background) {
+    @include color-scheme($text, $background);
+  }
+}
 
-@include runner-end;
+.foo {
+  @include -color-scheme(white, black);
+  font-style: italic;
+}
+
+.bar {
+  @include -color-scheme(white, black);
+}
+
+.baz {
+  @include -color-scheme(red, black);
+}
+
+@include debug-map($__lilo-register__);
