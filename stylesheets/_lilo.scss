@@ -6,3 +6,9 @@
 //// further by also allowing to share dynamic styles.
 ////
 //// @author [Yoannis Jamar](http://yoannis.me)
+
+@import "lilo/register";
+@import "lilo/fetch";
+@import "lilo/extend";
+@import "lilo/build";
+@import "lilo/share";
