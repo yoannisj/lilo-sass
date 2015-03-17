@@ -1,0 +1,44 @@
+// =============================================================================
+// =LILO - BUILD
+// =============================================================================
+//// Include styles and make them available for future sharing.
+////
+//// @group lilo-share
+//// @author [Yoannis Jamar](http://yoannis.me)
+
+@import "lilo/register/fetch";
+@import "lilo/register/register";
+
+// =lilo-add( $identifier[, $args... ])
+// -----------------------------------------------------------------------------
+/// Associate styles with an `$identifier`, `$args` pair in Lilo's register, and
+/// include them if it's the first time they are being registered.
+/// **Note**: you probably want `$identifier` to correspond to a mixin which
+/// outputs the styles you want to share. This will allow further versions of
+/// Lilo to include the mixin [dynamically](https://github.com/sass/sass/issues/626#issuecomment-77081789)
+///  — saving you from manually including it in the content block, and making
+/// sure registered styles will always have the same output.
+///
+/// @param {string} $identifier - A unique identifier for the shared styles.
+/// @param {arglist} $args... [()] - Settings for dynamic styles.
+///
+/// @throw Warning when trying to add styles that were already added before.
+///
+/// @access public
+/// @since 0.1.0
+
+@mixin lilo-add( $identifier, $args... )
+{
+  @if _lilo-register($identifier, $args...) {
+    $token: _lilo-fetch($identifier, $args...);
+    @at-root {
+      %#{$identifier}-#{$token} {
+        @content;
+      }
+    }
+  }
+
+  @else {
+    @include throw-warning('lilo-use():: Tried to add styles that were already added before.');
+  }
+}

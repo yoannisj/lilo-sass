@@ -1,0 +1,45 @@
+// =============================================================================
+// =LILO - USE
+// =============================================================================
+//// Extend styles that were added before.
+////
+//// @group lilo-share
+//// @author [Yoannis Jamar](http://yoannis.me)
+
+@import "lilo/register/fetch";
+
+// =lilo-use( $identifier, $args... )
+// -----------------------------------------------------------------------------
+/// Extends styles that were made available for sharing by calling the
+/// `lilo-add()` mixin.
+/// **Note**: uses a [technique](http://www.sitepoint.com/cross-media-query-extend-sass/)
+/// that allows cross-media `@extend`.
+///
+/// @param {string} $identifier - A unique identifier for the shared styles.
+/// @param {arglist} $args... [()] - Settings for dynamic styles.
+///
+/// @throw Warning when trying to use styles that were not added before.
+///
+/// @access public
+/// @since 0.1.0
+///
+/// @todo add an `$optional` parameter and throw an error if set to `true`
+/// and trying to use styles that were not added before.
+
+@mixin lilo-use( $identifier, $args... )
+{
+  $token: _lilo-fetch($identifier, $args...);
+
+  @if $token {
+    @debug "use():: found token #{inspect($token)}";
+    @at-root (without:media) {
+      & {
+        @extend %#{$identifier}-#{$token} !optional;
+      }
+    }
+  }
+
+  @else {
+    @include throw-warning('lilo-use():: Tried to use styles that were not added before.');
+  }
+}

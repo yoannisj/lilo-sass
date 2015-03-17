@@ -1,0 +1,43 @@
+// =============================================================================
+// =LILO - SHARE
+// =============================================================================
+////
+//// @group lilo-share
+//// @author [Yoannis Jamar](http://yoannis.me)
+
+@import "lilo/add";
+@import "lilo/use";
+
+// =lilo-share( $identifier, $args... )
+// -----------------------------------------------------------------------------
+/// Dynamically includes or extends the styles corresponding to the
+/// `$identifier`, `$args` pair.
+///
+/// @param {string} $identifier - A unique identifier for the shared styles.
+/// @param {arglist} $args... [()] - Settings for dynamic styles.
+///
+/// @access public
+/// @since 0.1.0
+
+@mixin lilo-share( $identifier, $args... )
+{
+  @include lilo-add( $identifier, $args... ) {
+    @content;
+  }
+
+  @include lilo-use( $identifier, $args... );
+}
+
+// =lilo( $identifier, $args... )
+// -----------------------------------------------------------------------------
+/// @alias lilo-share
+///
+/// @access public
+/// @since 0.1.0
+
+@mixin lilo( $identifier, $args... )
+{
+  @include lilo-share( $identifier, $args... ) {
+    @content;
+  }
+}
