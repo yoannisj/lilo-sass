@@ -4,6 +4,16 @@
   "version": "0.1.0",
   "description": "Small sass framework to share common styles between css modules.",
   "homepage": "https://github.com/yoannisj/sass-lilo",
+  "keywords": [
+    "Sass",
+    "CSS",
+    "stylesheets",
+    "DRY",
+    "mixins",
+    "components",
+    "modular",
+    "utility"
+  ],
   "license": "ISC",
   "author": "Yoannis Jamar <yoannis.j@gmail.com>",
   "repository": {

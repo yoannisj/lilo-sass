@@ -1,0 +1,28 @@
+{
+  "name": "sass-lilo",
+  "version": "0.1.0",
+  "description": "Small sass framework to share common styles between css modules.",
+  "main": "",
+  "authors": [
+    "Yoannis Jamar <yoannis.j@gmail.com>"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "Sass",
+    "CSS",
+    "stylesheets",
+    "DRY",
+    "mixins",
+    "components",
+    "modular",
+    "utility"
+  ],
+  "homepage": "https://github.com/yoannisj/sass-lilo",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

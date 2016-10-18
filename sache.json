@@ -1,0 +1,14 @@
+{
+  "name": "sass-lilo",
+  "description": "Small sass framework to share common styles between css modules.",
+  "tags": [
+   "Sass",
+    "CSS",
+    "stylesheets",
+    "DRY",
+    "mixins",
+    "components",
+    "modular",
+    "utility"
+  ]
+}
