@@ -38,7 +38,7 @@
     }
   }
 
-  @else {
-    @include throw-warning('lilo-use():: Tried to add styles that were already added before.');
-  }
+  // @else {
+  //   @include throw-warning('lilo-use():: Tried to add styles that were already added before.');
+  // }
 }

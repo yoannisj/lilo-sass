@@ -31,7 +31,6 @@
   $token: _lilo-fetch($identifier, $args...);
 
   @if $token {
-    @debug "use():: found token #{inspect($token)}";
     @at-root (without:media) {
       & {
         @extend %#{$identifier}-#{$token} !optional;
