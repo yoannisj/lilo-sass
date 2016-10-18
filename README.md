@@ -1,12 +1,12 @@
 # Lilo
 
-Lilo is a small Sass framework to help sharing styles between classes and components. It pushes the Sam Richard's [DRY mixin technique](http://alistapart.com/article/dry-ing-out-your-sass-mixins) further by also allowing to share dynamic styles.
+Lilo is a small Sass framework to help sharing styles between classes and components. It pushes  Sam Richard's [DRY mixin technique](http://alistapart.com/article/dry-ing-out-your-sass-mixins) further by also allowing to share dynamic styles.
 
 Lilo is the diminituve of the german name Liselotte, and means *'the generous one'*.
 
 ## Sharing styles carefully
 
-Use this very carefully since it relies on the `@extend` directive which, despite it's benefits, also comes with its downsides]. More info:
+Use this very carefully since it relies on the `@extend` directive which, despite its benefits, also comes with downsides]. More info:
 
 + [Why you should avoid Sass extend](http://www.sitepoint.com/avoid-sass-extend/) — if you decide to use Lilo, you obvisouly won't approve. But one should be aware of these points.
 + [What Nobody Told You About Sass’s @extend](http://www.sitepoint.com/sass-extend-nobody-told-you/)
@@ -64,11 +64,11 @@ CSS output
         background: black;
     }
 
-Note that you have to include the shared styles manually evey-time you want to share them. This is quite annoying and very error-prone. Therefore it is recommended that you manually include a single mixin in `lilo()`'s content block and pass the name of that mixin as first argument. This will also make the transition to future releases of Lilo easier.
+Note that you have to include the shared styles manually every-time you want to share them. This is quite annoying and very error-prone. Therefore it is recommended that you manually include a single mixin in `lilo()`'s content block and pass the name of that mixin as first argument. This will also make the transition to future releases of Lilo easier.
 
-Indeed, when sass will allow to [dynamically include mixins](https://github.com/sass/sass/issues/626), future releases of Lilo will be able to include shared styles for you.
+This way, when sass will allow to [dynamically include mixins](https://github.com/sass/sass/issues/626), future releases of Lilo will be able to include shared styles automatically for you.
 
-In the waiting for this feature, a better approach is to wrap your mixins inside a *sharing wrapper mixin* as illustrated in the next example.
+In the waiting for this feature, the best and recommended approach is to wrap your mixins inside a *sharing wrapper mixin* as illustrated in the next example.
 
 ### Using a wrapper mixins to output shared styles
 
@@ -116,7 +116,7 @@ CSS output
         background: black;
     }
 
-Note that this technique also makes it easy for you to fix issues where you end up repeating the same selector multiple times, because it eventually doesn't the share the included styles with any other selector.
+Note that this technique also makes it easy for you to fix issues where you end up repeating the same selector multiple times, when included styles eventually don't get shared with any other selector.
 
 SCSS stylesheet
 
@@ -138,7 +138,7 @@ CSS output
 
 SCSS stylesheet
 
-Indeed, imply remove the `-` in front of your included mixin's name to fix it.
+To fix this, simply remove the `-` in front of your included mixin's name.
 
     .baz {
         @include color-scheme(red, black);
@@ -157,9 +157,11 @@ CSS output
 
 + Sometimes you don't know whether your styles are going to be shared by other components in your project or not. Therefore you might decide to share all styles that are subject to sharing, and end up with unnecessarily duplicated selectors.
 
-+ The first time styles are shared, they will be output **after** the other styles in the same ruleset, no matter if these other styles are written *before* or *after* the `lilo` mixin. This means that you can not override a shared css-rule by writing it in the same ruleset.  
-    
-    To fix this, write the selector twice: once with the shared styles only, and a second time with all other styles.
+    This can be fixed using css minification tools that [merge adjacent rulesets](http://cssnano.co/optimisations/mergeRules) by selectors, such as [cssnano](http://cssnano.co) does.
+
++ The first time styles are shared, they will be output **after** the other styles in the same ruleset, no matter if these other styles are written *before* or *after* the `lilo` mixin. This means that you can not override a shared css-rule by writing it in the same ruleset.
+
+    To fix this, write the selector twice: once with the shared styles only, and a second time with all other styles. After sass compiled, you could [re-merge](http://cssnano.co/optimisations/mergeRules) these adjacent rulesets with css minification.
 
 + Using Lilo allows cross-media extends. These are very useful and will probably ship soon with future sass releases. But they are also spooky because they can break the cascade. Indeed, you are never really sure where the styles will be output.  
     
