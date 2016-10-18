@@ -1,5 +1,5 @@
 {
-  "name": "Lilo",
+  "name": "sass-lilo",
   "title": "Lilo Sass",
   "version": "0.1.0",
   "description": "Small sass framework to share common styles between css modules.",
