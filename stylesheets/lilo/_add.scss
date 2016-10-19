@@ -29,9 +29,12 @@
 
 @mixin lilo-add( $identifier, $args... )
 {
-  @if _lilo-register($identifier, $args...) {
+  @if _lilo-register($identifier, $args...)
+  {
     $token: _lilo-fetch($identifier, $args...);
-    @at-root {
+
+    @at-root
+    {
       %#{$identifier}-#{$token} {
         @content;
       }

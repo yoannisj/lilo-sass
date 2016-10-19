@@ -6,7 +6,8 @@
 //// @author [Yoannis Jamar](http://yoannis.me)
 
 @import "aleksi/maps/map-find";
-@import "lilo/register/get";
+
+$__lilo-register__: () !default;
 
 // =_lilo-fetch( $identifier, $args... )
 // -----------------------------------------------------------------------------
@@ -26,8 +27,7 @@
 
 @function _lilo-fetch( $identifier, $args... )
 {
-  $register: _lilo-get();
-  $entry: map-get($register, $identifier);
+  $entry: map-get($__lilo-register__, $identifier);
 
   // return token corresponding to the `$identifier`, `$args` pair.
   @return if($entry, map-find-key($entry, $args), null);

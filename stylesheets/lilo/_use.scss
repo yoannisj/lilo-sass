@@ -22,17 +22,17 @@
 ///
 /// @access public
 /// @since 0.1.0
-///
-/// @todo add an `$optional` parameter and throw an error if set to `true`
-/// and trying to use styles that were not added before.
 
 @mixin lilo-use( $identifier, $args... )
 {
   $token: _lilo-fetch($identifier, $args...);
 
-  @if $token {
-    @at-root (without:media) {
+  @if $token
+  {
+    @at-root {
       & {
+        // extend optionally, for in case the previously added module has
+        // no content (extending empty placeholder's provokes error).
         @extend %#{$identifier}-#{$token} !optional;
       }
     }

@@ -7,8 +7,8 @@
 
 @import "sassy-maps";
 @import "lilo/register/fetch";
-@import "lilo/register/get";
-@import "lilo/register/set";
+
+$__lilo-register__: () !default;
 
 // =_lilo-register( $identifier[, $args... ])
 // -----------------------------------------------------------------------------
@@ -38,7 +38,8 @@
   // same identifier and arguments
   @if not _lilo-fetch($identifier, $args...) {
     // add the entry to Lilo's register and confirm if it was successful.
-    @return _lilo-set(map-set-deep( _lilo-get(), $identifier unique-id(), $args));
+    $__lilo-register__: map-set-deep($__lilo-register__, $identifier unique-id(), $args) !global;
+    @return true;
   }
 
   // announce that `$identifier`, '$args' pair was already registered before
