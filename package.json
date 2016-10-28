@@ -1,9 +1,8 @@
 {
-  "name": "sass-lilo",
-  "title": "Lilo Sass",
+  "name": "lilo-sass",
   "version": "0.1.1",
   "description": "Small sass framework to share common styles between css modules.",
-  "homepage": "https://github.com/yoannisj/sass-lilo",
+  "homepage": "https://github.com/yoannisj/lilo-sass",
   "keywords": [
     "Sass",
     "CSS",
@@ -18,7 +17,7 @@
   "author": "Yoannis Jamar <yoannis.j@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yoannisj/aleksi/sass-lilo.git"
+    "url": "https://github.com/yoannisj/lilo-sass.git"
   },
   "devDependencies": {
     "mocha": "^3.1.2",

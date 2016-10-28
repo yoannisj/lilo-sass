@@ -1,8 +1,8 @@
-# Lilo
+# Lilo-sass
 
 Lilo is a small Sass framework to help sharing styles between classes and components. It pushes  Sam Richard's [DRY mixin technique](http://alistapart.com/article/dry-ing-out-your-sass-mixins) further by also allowing to share dynamic styles.
 
-Lilo is the diminituve of the german name Liselotte, and means *'the generous one'*.
+Lilo is the diminituve of the german name Liselotte, and means *'the generous one'*. This name was chosen, as the whole idea behind Lilo is to facilitate the sharing of common css rulesets.
 
 ## Sharing styles carefully
 
