@@ -1,6 +1,6 @@
 {
   "name": "lilo-sass",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Small sass framework to share common styles between css modules.",
   "main": "",
   "authors": [
