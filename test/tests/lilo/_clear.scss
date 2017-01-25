@@ -1,0 +1,88 @@
+// =============================================================================
+// =LILO TESTS - CLEAR
+// =============================================================================
+
+@import "lilo/register/register";
+@import "lilo/clear";
+
+@include test-module('The lilo-clear function')
+{
+  $id-a: 'test-#{unique-id()}';
+  $id-b: 'test-#{unique-id()}';
+  $id-c: 'test-#{unique-id()}';
+  $args-a: ("foo", false, 100);
+  $args-b: ("bar", true, 3);
+
+  @include test('should clear all versions registered for the given identifier')
+  {
+    // prepare test
+    $reg-a: _lilo-register($id-a);
+    $reg-aa: _lilo-register($id-a, $args-a);
+    $reg-ab: _lilo-register($id-a, $args-b);
+    $reg-b: _lilo-register($id-b);
+    $reg-ba: _lilo-register($id-b, $args-a);
+
+    // inspect before
+    $reg-before: $__lilo-register__;
+    $regln-before: length($__lilo-register__);
+
+    // perform test
+    $clear-a: lilo-clear($id-a);
+
+    // inspect after
+    $reg-after: $__lilo-register__;
+    $regln-after: length($__lilo-register__);
+
+    // verify results
+    @include assert-equal(map-has-key($__lilo-register__, $id-a), false);
+    @include assert-equal(map-has-key($__lilo-register__, $id-b), true);
+    @include assert-equal($regln-after, $regln-before - 1);
+  }
+
+  @include test('should clear all versions of all passed identifiers')
+  {
+    // prepare test
+    $reg-a: _lilo-register($id-a);
+    $reg-aa: _lilo-register($id-a, $args-a);
+    $reg-ab: _lilo-register($id-a, $args-b);
+    $reg-b: _lilo-register($id-b);
+    $reg-ba: _lilo-register($id-b, $args-a);
+    $reg-c: _lilo-register($id-c);
+    $reg-ca: _lilo-register($id-c, $args-a);
+
+    // inspect before
+    $reg-before: $__lilo-register__;
+    $regln-before: length($__lilo-register__);
+
+    // perform test
+    $clear-ab: lilo-clear($id-a $id-b);
+
+    // inspect after
+    $reg-after: $__lilo-register__;
+    $regln-after: length($__lilo-register__);
+
+    // verify results
+    @include assert-equal(map-has-key($__lilo-register__, $id-a), false);
+    @include assert-equal(map-has-key($__lilo-register__, $id-b), false);
+    @include assert-equal(map-has-key($__lilo-register__, $id-c), true);
+    @include assert-equal($regln-after, $regln-before - 2);
+  }
+
+  @include test('should clear all previously registered identifier, arguments pairs if no arguments were passed')
+  {
+    // prepare test
+    $reg-a: _lilo-register($id-a);
+    $reg-aa: _lilo-register($id-a, $args-a);
+    $reg-ab: _lilo-register($id-a, $args-b);
+    $reg-b: _lilo-register($id-b);
+    $reg-ba: _lilo-register($id-b, $args-a);
+
+    // perform test
+    $clear: lilo-clear();
+
+    // verify results
+    @include assert-equal(map-has-key($__lilo-register__, $id-a), false);
+    @include assert-equal(map-has-key($__lilo-register__, $id-b), false);
+    @include assert-equal(length($__lilo-register__), 0);
+  }
+}
