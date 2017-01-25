@@ -5,6 +5,7 @@
 //// @group lilo-register
 //// @author [Yoannis Jamar](http://yoannis.me)
 
+@import "aleksi/general/throw";
 @import "aleksi/maps/map-find";
 
 $__lilo-register__: () !default;
@@ -27,6 +28,10 @@ $__lilo-register__: () !default;
 
 @function _lilo-fetch( $identifier, $args... )
 {
+  @if type-of($identifier) != string {
+    @return throw-error('_lilo-register():: $identifier must be a string. Was #{inspect($identifier)}.');
+  }
+
   $entry: map-get($__lilo-register__, $identifier);
 
   // return token corresponding to the `$identifier`, `$args` pair.
