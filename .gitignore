@@ -19,6 +19,7 @@ tmp
 # NODE MODULES
 # ------------
 node_modules
+npm-debug.log
 
 # SASSDOC
 # -------
