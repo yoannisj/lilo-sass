@@ -1,0 +1,102 @@
+// =============================================================================
+// =LILO TESTS - SHARE
+// =============================================================================
+
+@import "lilo/share";
+
+@include test-module('The lilo-share mixin')
+{
+  $id-a: 'test-#{unique-id()}';
+  $id-b: 'test-#{unique-id()}';
+  $args-a: ("foo", false, 100);
+
+  @include test('should register, output and extend styles wrapped in a placeholder unique to the given identifier, arguments pair.')
+  {
+    @include assert('(without arguments)')
+    {
+      @include output
+      {
+        @include lilo-share($id-a) {
+          content: 'CSS associated with #{$id-a}';
+        }
+      }
+
+      @include expect
+      {
+        content: 'CSS associated with #{$id-a}';
+      }
+    }
+
+    @include assert('(with arguments)')
+    {
+      @include output
+      {
+        @include lilo-share($id-a, $args-a) {
+          content: 'CSS associated with #{$id-a}';
+          first-arg: nth($args-a, 1);
+        }
+      }
+
+      @include expect
+      {
+        content: 'CSS associated with #{$id-a}';
+        first-arg: nth($args-a, 1);
+      }
+    }
+  }
+
+  @include test('should extend existing placeholder if one was already created for given identifier, arguments pair')
+  {
+    @include assert('(without arguments)')
+    {
+      @include output
+      {
+        @include lilo-share($id-a) {
+          content: 'CSS associated with #{$id-a}';
+        }
+      }
+
+      @include expect {}
+    }
+
+    @include assert('(with arguments)')
+    {
+      @include output
+      {
+        @include lilo-share($id-a, $args-a) {
+          content: 'CSS associated with #{$id-a}';
+          first-arg: nth($args-a, 1);
+        }
+      }
+
+      @include expect {}
+    }
+  }
+
+  @include test('should be aliased by the "lilo()" mixin.')
+  {
+    @include assert('(already created)')
+    {
+      @include output {
+        @include lilo($id-a) {
+          content: 'CSS associated with #{$id-a}';
+        }
+      }
+
+      @include expect {}
+    }
+
+    @include assert('(new identifier, arguments pair)')
+    {
+      @include output {
+        @include lilo($id-b) {
+          content: 'CSS associated with #{$id-b}';
+        }
+      }
+
+      @include expect {
+        content: 'CSS associated with #{$id-b}';
+      }
+    }
+  }
+}
