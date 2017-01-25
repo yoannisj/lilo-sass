@@ -1,0 +1,74 @@
+// =============================================================================
+// =LILO TESTS - USE
+// =============================================================================
+
+@import "lilo/add";
+@import "lilo/use";
+
+@include test-module('The lilo-use mixin')
+{
+  $id-a: 'test-#{unique-id()}';
+  $id-b: 'test-#{unique-id()}';
+  $args-a: ("foo", false, 100);
+
+  @include test('should extend styles created with add() before')
+  {
+    @include assert('(without arguments)')
+    {
+      @include output
+      {
+        @include lilo-add($id-a) {
+          content: 'CSS associated with #{$id-a}';
+        }
+
+        @include lilo-use($id-a);
+      }
+
+      @include expect
+      {
+        content: 'CSS associated with #{$id-a}';
+      }
+    }
+
+    @include assert('(with arguments)')
+    {
+      @include output
+      {
+        @include lilo-add($id-a, $args-a) {
+          content: 'CSS associated with #{$id-a}';
+          first-arg: nth($args-a, 1);
+        }
+
+        @include lilo-use($id-a, $args-a);
+      }
+
+      @include expect
+      {
+        content: 'CSS associated with #{$id-a}';
+        first-arg: nth($args-a, 1);
+      }
+    }
+  }
+
+  @include test('should not extend and throw a warning if styles were not created before')
+  {
+    @include assert('(without arguments)')
+    {
+      @include output {
+        @include lilo-use($id-b);
+      }
+
+      @include expect {}
+    }
+
+    @include assert('(with arguments)')
+    {
+      @include output {
+        @include lilo-use($id-b, $args-a);
+      }
+
+      @include expect {}
+    }
+  }
+
+}

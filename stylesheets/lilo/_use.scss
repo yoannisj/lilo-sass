@@ -12,8 +12,6 @@
 // -----------------------------------------------------------------------------
 /// Extends styles that were made available for sharing by calling the
 /// `lilo-add()` mixin.
-/// **Note**: uses a [technique](http://www.sitepoint.com/cross-media-query-extend-sass/)
-/// that allows cross-media `@extend`.
 ///
 /// @param {string} $identifier - A unique identifier for the shared styles.
 /// @param {arglist} $args... [()] - Settings for dynamic styles.
@@ -28,14 +26,10 @@
   $token: _lilo-fetch($identifier, $args...);
 
   @if $token
-  {
-    @at-root {
-      & {
-        // extend optionally, for in case the previously added module has
-        // no content (extending empty placeholder's provokes error).
-        @extend %#{$identifier}-#{$token} !optional;
-      }
-    }
+  {    
+    // extend optionally, for in case the previously added module has
+    // no content (extending empty placeholder's provokes error).
+    @extend %#{$identifier}-#{$token} !optional;
   }
 
   @else {
