@@ -1,0 +1,85 @@
+// =============================================================================
+// =LILO TESTS - ADD
+// =============================================================================
+
+@import "lilo/register/fetch";
+@import "lilo/add";
+
+@include test-module('The lilo-add mixin')
+{
+  $id-a: 'test-#{unique-id()}';
+  $args-a: ("foo", false, 100);
+
+  @include test('should include styles from content block if identifier, arguments pair was not registered yet')
+  {
+    @include assert('(withtout arguments)')
+    {
+      @include output
+      {
+        @include lilo-add($id-a) {
+          content: 'CSS associated with #{$id-a}';
+        }
+
+        // use @extend to include the styles that were added to a dynamic placeholder
+        @extend %#{$id-a}-#{_lilo-fetch($id-a)};
+      }
+
+      @include expect {
+        content: 'CSS associated with #{$id-a}';
+      }
+    }
+
+    @include assert('(with arguments)')
+    {
+      @include output
+      {
+        @include lilo-add($id-a, $args-a) {
+          content: 'CSS associated with #{$id-a}';
+          first-arg: nth($args-a, 1);
+        }
+
+        // use @extend to include the styles that were added to a dynamic placeholder
+        @extend %#{$id-a}-#{_lilo-fetch($id-a, $args-a)};
+      }
+
+      @include expect {
+        content: 'CSS associated with #{$id-a}';
+        first-arg: nth($args-a, 1);
+      }
+    }
+  }
+
+  @include test('should not include styles from content block if identifier, arguments pair was already registered before')
+  {
+    @include assert('(without arguments)')
+    {
+      @include output
+      {
+        @include lilo-add($id-a) {
+          content: 'CSS associated with #{$id-a}';
+        }
+
+        // use @extend to include the styles that were added to a dynamic placeholder
+        @extend %#{$id-a}-#{_lilo-fetch($id-a)};
+      }
+
+      @include expect {}
+    }
+
+    @include assert('(with arguments)')
+    {
+      @include output
+      {
+        @include lilo-add($id-a, $args-a) {
+          content: 'CSS associated with #{$id-a}';
+          first-arg: nth($args-a, 1);
+        }
+
+        // use @extend to include the styles that were added to a dynamic placeholder
+        @extend %#{$id-a}-#{_lilo-fetch($id-a, $args-a)};
+      }
+
+      @include expect {}
+    }
+  }
+}

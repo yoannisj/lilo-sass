@@ -1,6 +1,9 @@
 // LILO TESTS
 // ----------
 
-// REGISTER
+// PRIVATE (REGISTER)
 @import "tests/lilo/register/fetch";
 @import "tests/lilo/register/register";
+
+// PUBLIC
+@import "tests/lilo/add";

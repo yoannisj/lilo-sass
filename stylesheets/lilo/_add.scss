@@ -16,7 +16,7 @@
 /// **Note**: you probably want `$identifier` to correspond to a mixin which
 /// outputs the styles you want to share. This will allow further versions of
 /// Lilo to include the mixin [dynamically](https://github.com/sass/sass/issues/626#issuecomment-77081789)
-///  — saving you from manually including it in the content block, and making
+/// — saving you from manually including it in the content block, and making
 /// sure registered styles will always have the same output.
 ///
 /// @param {string} $identifier - A unique identifier for the shared styles.
