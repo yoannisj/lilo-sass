@@ -24,5 +24,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "sassy-maps": "^0.4.0",
+    "sass-aleksi": "^0.3.2"
+  }
 }

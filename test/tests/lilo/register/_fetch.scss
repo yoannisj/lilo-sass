@@ -1,0 +1,63 @@
+// =============================================================================
+// =LILO TESTS - FETCH
+// =============================================================================
+
+@import "lilo/register/fetch";
+@import "lilo/register/register";
+
+@include test-module('The _lilo-fetch function')
+{
+  $id-a: 'test-#{unique-id()}';
+  $id-b: 'test-#{unique-id()}';
+
+  $args-a: (1, true, "hello");
+  $args-b: (4, false, "bar");
+
+  @include test('should return a unique identifier for each previously registered identifier, arguments pair')
+  {
+    // prepare tests
+    $res: _lilo-register($id-a, $args-a);
+    $res: _lilo-register($id-a, $args-b);
+    $res: _lilo-register($id-b, $args-a);
+
+    // perform tests
+    $uid-aa: _lilo-fetch($id-a, $args-a);
+    $uid-ab: _lilo-fetch($id-a, $args-b);
+    $uid-ba: _lilo-fetch($id-b, $args-a);
+
+    // verify results
+    @include assert-unequal($uid-aa, $uid-ab);
+    @include assert-unequal($uid-ab, $uid-ba);
+    @include assert-unequal($uid-ba, $uid-aa);
+  }
+
+  @include test('should always return the same unique id for a previously registered identifer, arguments pair')
+  {
+    $uid-aa-before: _lilo-fetch($id-a, $args-a);
+    $uid-aa-after: _lilo-fetch($id-a, $args-a);
+    $uid-ab-before: _lilo-fetch($id-a, $args-b);
+    $uid-ab-after: _lilo-fetch($id-a, $args-b);
+
+    @include assert-equal($uid-aa-before, $uid-aa-after);
+    @include assert-equal($uid-ab-before, $uid-ab-after);
+  }
+
+  @include test('should always return null if the given identifier, arguments pair was not registered yet')
+  {
+    $id-foo: unique-id();
+    $uid-bb: _lilo-fetch($id-b, $args-b);
+    $uid-bb-before: $uid-bb;
+    $uid-bb-after: _lilo-fetch($id-b, $args-b);
+
+    @include assert-equal($uid-bb, null);
+    @include assert-equal(type-of($uid-bb), 'null');
+    @include assert-equal($uid-bb-before, $uid-bb-after);
+  }
+
+  // @include xtest('should throw an error if identifier is not a string')
+  // {
+  //   @include assert-equal( _lilo-fetch(105, true), null );
+  //   @include assert-equal( _lilo-fetch(true, 'hello'), null );
+  //   @include assert-equal( _lilo-fetch("some" "list" 10, 'hello'), null );
+  // }
+}

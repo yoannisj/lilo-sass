@@ -11,7 +11,7 @@ var sassFile = path.join(__dirname, 'test.scss');
 var sassIncludePaths = [
   './stylesheets/',
   './test/',
-  './bower_components/SassyLists/stylesheets/',
+  './bower_components/sass-aleksi/stylesheets/',
   './bower_components/sassy-maps/sass/'
 ];
 

@@ -1,0 +1,98 @@
+// =============================================================================
+// =LILO TESTS - REGISTER
+// =============================================================================
+
+@import "lilo/register/register";
+
+@include test-module('The _lilo-register function')
+{
+  $id-a: 'test-#{unique-id()}';
+  $id-b: 'test-#{unique-id()}';
+
+  $args-a: (1, true, "hello");
+  $args-b: (4, false, "bar");
+
+  @include test('should add new identifiers to the register')
+  {
+    // inspect before
+    $reg-before: $__lilo-register__;
+    $regln-before: length($__lilo-register__);
+
+    // perform test
+    $res: _lilo-register($id-a, $args-a...);
+
+    // inspect after
+    $reg-after: $__lilo-register__;
+    $regln-after: length($__lilo-register__);
+
+    // verify results
+    @include assert-unequal( $reg-before, $reg-after );
+    @include assert-unequal( $regln-before, $regln-after );
+    @include assert-true(map-has-key($__lilo-register__, $id-a));
+    @include assert-equal(length(map-get($__lilo-register__, $id-a)), 1);
+  }
+
+  @include test('should register new argument lists under existing identifiers')
+  {
+    // inspect before
+    $regln-before: length($__lilo-register__);
+    $id-before: map-get($__lilo-register__, $id-a);
+    $idln-before: length($id-before);
+
+    // perform test
+    $res: _lilo-register($id-a, $args-b...);
+    
+    // inspect after
+    $regln-after: length($__lilo-register__);
+    $id-after: map-get($__lilo-register__, $id-a);
+    $idln-after: length($id-after);
+
+    // verify results
+    @include assert-equal( $regln-before, $regln-after );
+    @include assert-unequal( $id-before, $id-after );
+    @include assert-unequal( $idln-before, $idln-after );
+  }
+
+  @include test('should not modify the register if identifier, arguments pair was registered before')
+  {
+    // inspect before
+    $reg-before: $__lilo-register__;
+    $regln-before: length($__lilo-register__);
+    $id-before: map-get($__lilo-register__, $id-a);
+    $idln-before: length($id-before);
+
+    // perform test
+    $res: _lilo-register($id-a, $args-a...);
+
+    // inspect after
+    $reg-after: $__lilo-register__;
+    $regln-after: length($__lilo-register__);
+    $id-after: map-get($__lilo-register__, $id-a);
+    $idln-after: length($id-after);
+
+    // verify results
+    @include assert-equal($reg-before, $reg-after);
+    @include assert-equal($regln-before, $regln-after);
+    @include assert-equal($id-before, $id-after);
+    @include assert-equal($idln-before, $idln-after);
+  }
+
+  @include test('should return true when a new identifer, arguments pair gets registered')
+  {
+    @include assert-true(_lilo-register($id-b, $args-a));
+    @include assert-true(_lilo-register($id-b, $args-b));
+  }
+
+  @include test('should return false when the given identifer, arguments pair is already registered')
+  {
+    @include assert-false(_lilo-register($id-b, $args-a));
+    @include assert-false(_lilo-register($id-b, $args-b));
+  }
+
+  // @include xtest('should throw an error if identifier is not a string')
+  // {
+  //   @include assert-equal( _lilo-register(105, true), null );
+  //   @include assert-equal( _lilo-register(true, 'hello'), null );
+  //   @include assert-equal( _lilo-register("some" "list" 10, 'hello'), null );
+  // }
+}

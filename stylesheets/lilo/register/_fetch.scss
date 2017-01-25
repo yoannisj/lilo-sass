@@ -19,7 +19,7 @@ $__lilo-register__: () !default;
 /// @param {string} $identifier - A unique identifier for the shared styles.
 /// @param {arglist} $args... [()] - Settings for dynamic styles.
 ///
-/// @return {string} - A unique token for to the `$identifier`, `$args` pair.
+/// @return {string} - A unique token for the `$identifier`, `$args` pair.
 ///
 /// @access private
 /// @since 0.1.0

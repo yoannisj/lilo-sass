@@ -1,0 +1,32 @@
+{
+  "name": "sass-aleksi",
+  "version": "0.3.1",
+  "authors": [
+    "Yoannis Jamar <yoannis.j@gmail.com>"
+  ],
+  "description": "A collection of Sass helper functions and mixins.",
+  "main": "stylesheets/_aleksi.scss",
+  "keywords": [
+    "sass",
+    "helpers",
+    "utils"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yoannisj/sass-aleksi.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "tmp",
+    "sassdoc"
+  ],
+  "dependencies": {
+    "SassyLists": "~2.2.4",
+    "sassy-maps": "~0.4.0"
+  }
+}
