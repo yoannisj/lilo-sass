@@ -5,18 +5,23 @@
 //// @group lilo-register
 //// @author [Yoannis Jamar](http://yoannis.me)
 
+@import "aleksi/general/throw";
+
 $__lilo-register__: () !default;
 
 // =FUNCTIONS
 // =============================================================================
 
-// =lilo-clear()
+// =lilo-clear([ $identifiers ])
 // -----------------------------------------------------------------------------
-/// Clears Lilo's register. Running this will make styles that were in the
-/// register unavailable for further sharing. Useful if at some point in you
-/// want to create a new set of shared styles that doesn't interfere with
-/// previously shared styles.
+/// Clears Lilo's registry. Running this will make styles that were in the
+/// register unavailable for further sharing. Useful if at some point you want
+/// to create a new set of shared styles that doesn't interfere with previously
+/// registered styles. By default, the complete registry will be cleared, but
+/// you can pass a white-list of identifiers to clear, which will leave other
+/// registered identifiers untouched.
 ///
+/// @param $identifiers {list|string} [null] - white-list of identifiers to clear
 /// @return {bool} - Always return true
 ///
 /// @access public
@@ -24,16 +29,32 @@ $__lilo-register__: () !default;
 ///
 /// @todo Unit-test lilo-clear() function
 
-@function lilo-clear()
+@function lilo-clear( $identifiers: null )
 {
-  $__lilo-register__: () !global;
+  // if no identifiers were passed
+  @if type-of($identifiers) == 'null' {
+    // clear complete registry
+    $__lilo-register__: () !global;
+    @return true;
+  }
+
+  // sanitize `$identifiers` argument
+  @each $identifier in $identifiers
+  {
+    @if type-of($identifier) != 'string' {
+      @return throw-error('_lilo-clear():: $identifier must be a string. Was #{inspect($identifier)}.');
+    }
+  }
+
+  // clear selected identifiers only and return `true` to communicate success
+  $__lilo-register__: map-remove($__lilo-register__, $identifiers...) !global;
   @return true;
 }
 
 // =MIXINS
 // =============================================================================
 
-// =lilo-clear()
+// =lilo-clear([ $identifiers ])
 // -----------------------------------------------------------------------------
 /// Clears Lilo's register. Delegates to the `lilo-clear()` function.
 ///
@@ -42,7 +63,7 @@ $__lilo-register__: () !default;
 /// @access public
 /// @since 0.1.0
 
-@mixin lilo-clear()
+@mixin lilo-clear( $identifiers: null )
 {
-  $cleared: lilo-clear();
+  $cleared: lilo-clear( $identifiers );
 }
