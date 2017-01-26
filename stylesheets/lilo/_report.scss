@@ -1,0 +1,81 @@
+// =============================================================================
+// =LILO - REPORT
+// =============================================================================
+//// Extend styles that were added before.
+////
+//// @group lilo-share
+//// @author [Yoannis Jamar](http://yoannis.me)
+
+$lilo-report-strategy: 'summary' !default;
+
+$__lilo-overuses__: ();
+
+// =FUNCTIONS
+// =============================================================================
+
+// =lilo-report-overuse($identifier[, $selector ])
+// -----------------------------------------------------------------------------
+///
+/// @access public
+/// @since 0.2.0
+
+@function lilo-report-overuse($identifier, $selector: &)
+{
+  @if $lilo-report-strategy == 'summary'
+  {
+    // add given selector to list of overuses for given identifier
+    // - include 'lilo-report-summary' at the very end to effectively report
+    $overuses: default-to(map-get($__lilo-overuses__, $identifier), ());
+    $overuses: append($overuses, $selector);
+    $__lilo-overuses__: map-set($__lilo-overuses__, $overuses) !global;
+  }
+
+  @else if $lilo-report-strategy == 'warn'
+  {
+    // throw warning in the console
+    $res: throw-warning('Exceeded usage: #{$selector}');
+  }
+
+  // return complete list of overuses for the given identifier
+  @return $overuses;
+}
+
+// =MIXINS
+// =============================================================================
+
+// =lilo-report-overuse($identifier[, $selector ])
+// -----------------------------------------------------------------------------
+///
+/// @see lilo-report-overuse
+///
+/// @access public
+/// @since 0.2.0
+
+@mixin lilo-report-overuse($identifier, $selector: &) {
+  $overuses: lilo-report-overuse($identifier, $selector);
+}
+
+// =lilo-report-summary()
+// -----------------------------------------------------------------------------
+///
+/// @access public
+/// @since 0.2.0
+
+@mixin lilo-report-summary()
+{
+  $output: 'LILO REPORT::\n=============\n';
+  $output: '#{$output}\nExceeded usage:\n';
+
+  @each $identifier, $selectors in $__lilo-overuses__
+  {
+    // create string listing selectors
+    $selectors-string: '';
+    @each $selector in $selectors { $selectors-string: '#{$selectors-string} | '; }
+    $selectors-string: str-slice($selectors-string, 0, -3);
+
+    // add identifer to the outpu
+    $output: '#{$output}\n#{$identifier} => \#{$selectors-string}';
+  }
+
+  @warn '#{$output}';
+}

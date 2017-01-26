@@ -33,6 +33,7 @@ $lilo-strict: false !default;
 @mixin lilo-use( $identifier, $args... )
 {
   $token: _lilo-fetch($identifier, $args...);
+
   @if not $token {
     @include throw-warning('lilo-use():: Tried to use styles that were not added before.');
   }
@@ -42,6 +43,12 @@ $lilo-strict: false !default;
     // update the given identifier's usage count
     $count: lilo-quota-count($identifier, 1);
     $limit: lilo-quota-limit($identifier);
+
+    // check identifier's quota and report when exceeding maximum usage limit
+    @if $count > $limit and $lilo-report-quotas-overuse {
+      @include lilo-report-overuse($identifier, &);
+    }
+
     @if $lilo-strict == false or $count <= $limit {
       // extend optionally, for in case the previously added module has
       // no content (extending empty placeholder's provokes error).
