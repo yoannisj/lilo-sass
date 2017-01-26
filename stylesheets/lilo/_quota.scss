@@ -1,0 +1,114 @@
+// =============================================================================
+// =LILO - QUOTA
+// =============================================================================
+////
+//// @group lilo-share
+//// @author [Yoannis Jamar](http://yoannis.me)
+
+@import "sassy-maps";
+@import "aleksi/general/default-to";
+
+// - 1. provide a way to set the default quota
+// - 2. provide a way to set a quota for a given identifier
+// - 3. keep track of how many times a given identifier variant was used
+// 4. warn when a given identifier variant was used more then allowed
+// 5. provide a way to control quota warnings
+// [6. provide a way to prevent over-using identifier variants (strict mode)]
+// 7. provide a way to output a summary of used quotas
+
+$lilo-default-quota: 10 !default;
+
+$__lilo-quota-limits__: () !default;
+
+$__lilo-quota-count__: () !default;
+
+// =FUNCTIONS
+// =============================================================================
+
+// =lilo-quota-limit($identifier[, $limit ])
+// -----------------------------------------------------------------------------
+/// Gets or sets the quota for a given identifier. If a limit amount is given,
+/// it will (re)define the maximum amount of times a given identifier may be
+/// extended with `lilo-use()`.
+///
+/// @param $identifier {string} - identifier to (re)define quota for
+/// @param $limit {number} [null] - maximum usage limit for $identifier
+/// @return {number|bool} - the maximum usage limit for $identifier
+///
+/// @access public
+/// @since 0.2.0
+
+@function lilo-quota-limit($identifier, $limit: null)
+{
+  @if type-of($limit) == 'null' {
+    @return default-to(map-get($__lilo-quota-limits__, $identifier), $lilo-default-quota);
+  }
+
+  // (re)define the given identifier's maximum usage limit
+  $__lilo-quota-limits__: map-set($__lilo-quota-limits__, $identifier, $limit) !global;
+
+  // return the newly set maximum usage limit
+  @return $limit;
+}
+
+// =lilo-quota-count($identifier[, $diff ])
+// -----------------------------------------------------------------------------
+/// Gets or updates the current count for the given identifiers usage quota.
+/// If no second argument is given, it will return the current count, if a
+/// negative number is given, the current count will be decreased, if a positive
+/// number is given the current count will be increased.
+///
+/// @param $identifier {string} - identifier to (re)define quota for
+/// @param $diff {number} [null] - the amount by which to in/decreased the count
+/// @return {number|bool} - the current usage count for $identifier
+///
+/// @access public
+/// @since 0.2.0
+
+@function lilo-quota-count($identifier, $diff: null)
+{
+  // get current count
+  $curr-count: default-to(map-get($__lilo-quota-count__, $identifier), 0);
+
+  // return current count if no difference was given
+  @if type-of($diff) != 'null' {
+    // in/decrease the current count by the given difference
+    $new-count: $curr-count + $diff;
+    $__lilo-quota-count__: map-set($__lilo-quota-count__, $identifier, $new-count);
+  }
+
+  // return the current count
+  @return $curr-count;
+}
+
+// =MIXINS
+// =============================================================================
+
+// =lilo-quota($identifier, $limit )
+// -----------------------------------------------------------------------------
+/// Sets the quota for a given identifier. The given limit (re)defines the
+/// maximum amount of times a given identifier may be extended with `lilo-use()`.
+///
+/// @see lilo-quota-limit
+///
+/// @access public
+/// @since 0.2.0
+
+@mixin lilo-quota-limit($identifier, $limit)
+{
+  $limit: lilo-quota-limit($identifier, $limit);
+}
+
+// =lilo-quota-count($identifier, $diff )
+// -----------------------------------------------------------------------------
+/// Updates the current count for the given identifiers usage quota.
+///
+/// @see lilo-quota-count
+///
+/// @access public
+/// @since 0.2.0
+
+@mixin lilo-quota-count($identifier, $limit)
+{
+  $count: lilo-quota($identifier, $limit);
+}
