@@ -6,7 +6,7 @@
 //// @group lilo-share
 //// @author [Yoannis Jamar](http://yoannis.me)
 
-$lilo-report-strategy: 'summary' !default;
+@import "lilo/settings";
 
 $__lilo-overuses__: ();
 

@@ -1,0 +1,12 @@
+// =============================================================================
+// =LILO - SETTINGS
+// =============================================================================
+////
+//// @group lilo-settings
+//// @author [Yoannis Jamar](http://yoannis.me)
+
+$lilo-strict: false !default;
+
+$lilo-report-strategy: 'summary' !default;
+
+$lilo-default-quota: 10 !default;

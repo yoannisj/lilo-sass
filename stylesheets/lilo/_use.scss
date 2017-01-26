@@ -8,11 +8,11 @@
 
 @import "sassy-maps";
 @import "aleksi/general/default-to";
+
+@import "lilo/settings";
 @import "lilo/register/fetch";
 @import "lilo/quota";
 @import "lilo/report";
-
-$lilo-strict: false !default;
 
 // =MIXINS
 // =============================================================================

@@ -7,6 +7,7 @@
 
 @import "sassy-maps";
 @import "aleksi/general/default-to";
+@import "lilo/settings";
 
 // - 1. provide a way to set the default quota
 // - 2. provide a way to set a quota for a given identifier
@@ -15,8 +16,6 @@
 // 5. provide a way to control quota warnings
 // [6. provide a way to prevent over-using identifier variants (strict mode)]
 // 7. provide a way to output a summary of used quotas
-
-$lilo-default-quota: 10 !default;
 
 $__lilo-quota-limits__: () !default;
 
