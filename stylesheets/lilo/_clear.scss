@@ -14,7 +14,7 @@ $__lilo-register__: () !default;
 
 // =lilo-clear([ $identifiers ])
 // -----------------------------------------------------------------------------
-/// Clears Lilo's registry. Running this will make styles that were in the
+/// Clears Lilo's register. Running this will make styles that were in the
 /// register unavailable for further sharing. Useful if at some point you want
 /// to create a new set of shared styles that doesn't interfere with previously
 /// registered styles. By default, the complete registry will be cleared, but
@@ -26,14 +26,12 @@ $__lilo-register__: () !default;
 ///
 /// @access public
 /// @since 0.1.0
-///
-/// @todo Unit-test lilo-clear() function
 
 @function lilo-clear( $identifiers: null )
 {
   // if no identifiers were passed
   @if type-of($identifiers) == 'null' {
-    // clear complete registry
+    // clear complete register
     $__lilo-register__: () !global;
     @return true;
   }

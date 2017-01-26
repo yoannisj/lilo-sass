@@ -26,8 +26,6 @@ $__lilo-register__: () !default;
 ///
 /// @access private
 /// @since 0.1.0
-///
-/// @todo Unit-test _lilo-register() function
 
 @function _lilo-register( $identifier, $args... )
 {
