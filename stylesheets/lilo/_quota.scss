@@ -9,14 +9,6 @@
 @import "aleksi/general/default-to";
 @import "lilo/settings";
 
-// - 1. provide a way to set the default quota
-// - 2. provide a way to set a quota for a given identifier
-// - 3. keep track of how many times a given identifier variant was used
-// 4. warn when a given identifier variant was used more then allowed
-// 5. provide a way to control quota warnings
-// [6. provide a way to prevent over-using identifier variants (strict mode)]
-// 7. provide a way to output a summary of used quotas
-
 $__lilo-quota-limits__: () !default;
 
 $__lilo-quota-count__: () !default;
