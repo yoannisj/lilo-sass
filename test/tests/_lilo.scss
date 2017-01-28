@@ -10,3 +10,7 @@
 @import "tests/lilo/clear";
 @import "tests/lilo/use";
 @import "tests/lilo/share";
+
+// SUMMARY
+@import "lilo/report";
+@include lilo-report-summary();

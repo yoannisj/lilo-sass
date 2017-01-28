@@ -6,12 +6,41 @@
 //// @group lilo-share
 //// @author [Yoannis Jamar](http://yoannis.me)
 
+@import "aleksi/lists/implode";
 @import "lilo/settings";
 
-$__lilo-overuses__: ();
+$__lilo-unfound__: () !default;
+$__lilo-overuses__: () !default;
 
 // =FUNCTIONS
 // =============================================================================
+
+// =lilo-report-unfound($identifier[, $selector ])
+// -----------------------------------------------------------------------------
+///
+/// @access public
+/// @since 0.2.0
+
+@function lilo-report-unfound($identifier, $selector: &)
+{
+  // add given identifier to list of unfound ones
+  $unfound: default-to(map-get($__lilo-unfound__, $identifier), ());
+  $unfound: append($unfound, $selector);
+  $__lilo-unfound__: map-set($__lilo-unfound__, $identifier, $unfound) !global;
+
+  // use adequate reporting method
+  @if $lilo-strict-mode or $lilo-report-method == 'error' {
+   // throw error
+    $res: throw-error('lilo-use():: Impossible to find styles for #{inspect($identifier)}, used by #{$selector}'); 
+  }
+
+  @else if $lilo-report-method == 'warn' {
+    // throw warning
+    $res: throw-warning('lilo-use():: Impossible to find styles for #{inspect($identifier)}, used by #{$selector}'); 
+  }
+
+  @return $selector;
+}
 
 // =lilo-report-overuse($identifier[, $selector ])
 // -----------------------------------------------------------------------------
@@ -21,27 +50,40 @@ $__lilo-overuses__: ();
 
 @function lilo-report-overuse($identifier, $selector: &)
 {
-  @if $lilo-report-strategy == 'summary'
-  {
-    // add given selector to list of overuses for given identifier
-    // - include 'lilo-report-summary' at the very end to effectively report
-    $overuses: default-to(map-get($__lilo-overuses__, $identifier), ());
-    $overuses: append($overuses, $selector);
-    $__lilo-overuses__: map-set($__lilo-overuses__, $overuses) !global;
+  // add given selector to list of overuses for given identifier
+  // - include 'lilo-report-summary' at the very end to effectively report
+  $overuses: default-to(map-get($__lilo-overuses__, $identifier), ());
+  $overuses: append($overuses, $selector);
+  $__lilo-overuses__: map-set($__lilo-overuses__, $identifier, $overuses) !global;
+
+  // use adequate reporting method
+  @if $lilo-strict-mode or $lilo-report-method == 'error' {
+   // throw error
+    $res: throw-error('lilo-use():: Usage quota for #{inspect($identifier)} exceeded by #{$selector}'); 
   }
 
-  @else if $lilo-report-strategy == 'warn'
-  {
-    // throw warning in the console
-    $res: throw-warning('Exceeded usage: #{$selector}');
+  @else if $lilo-report-method == 'warn' {
+    // throw warning
+    $res: throw-warning('lilo-use():: Usage quota for #{inspect($identifier)} exceeded by #{$selector}');
   }
 
-  // return complete list of overuses for the given identifier
-  @return $overuses;
+  @return $selector;
 }
 
 // =MIXINS
 // =============================================================================
+
+// =lilo-report-unfound($identifier[, $selector ])
+// -----------------------------------------------------------------------------
+///
+/// @see lilo-report-unfound
+///
+/// @access public
+/// @since 0.2.0
+
+@mixin lilo-report-unfound($identifier, $selector: &) {
+  $unfound: lilo-report-unfound($identifier, $selector);
+}
 
 // =lilo-report-overuse($identifier[, $selector ])
 // -----------------------------------------------------------------------------
@@ -63,19 +105,28 @@ $__lilo-overuses__: ();
 
 @mixin lilo-report-summary()
 {
-  $output: 'LILO REPORT::\n=============\n';
-  $output: '#{$output}\nExceeded usage:\n';
+  // summary header
+  @debug 'LILO SUMMARY::';
+  @debug '==============';
+  @debug '';
 
-  @each $identifier, $selectors in $__lilo-overuses__
+  @if length($__lilo-unfound__) > 0
   {
-    // create string listing selectors
-    $selectors-string: '';
-    @each $selector in $selectors { $selectors-string: '#{$selectors-string} | '; }
-    $selectors-string: str-slice($selectors-string, 0, -3);
-
-    // add identifer to the outpu
-    $output: '#{$output}\n#{$identifier} => \#{$selectors-string}';
+    // summary of reported unfound styles
+    @debug '#{length($__lilo-unfound__)} used style(s) could not be found:';
+    @each $identifier, $selectors in $__lilo-unfound__ {
+      @debug '- #{$identifier} => #{implode($selectors, "|")}';
+    }
+    @debug '';
   }
 
-  @warn '#{$output}';
+  @if length($__lilo-overuses__) > 0
+  {
+    // summary of reported overused styles
+    @debug '#{length($__lilo-unfound__)} style(s) used more then quotas allow:';
+    @each $identifier, $selectors in $__lilo-overuses__ {
+      @debug '- #{$identifier} => #{implode($selectors, "|")}';
+    }
+    @debug '';
+  }
 }

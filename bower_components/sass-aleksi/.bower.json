@@ -1,6 +1,6 @@
 {
   "name": "sass-aleksi",
-  "version": "0.3.2",
+  "version": "0.3.4",
   "authors": [
     "Yoannis Jamar <yoannis.j@gmail.com>"
   ],
@@ -30,14 +30,14 @@
     "sassy-maps": "~0.4.0"
   },
   "homepage": "https://github.com/yoannisj/sass-aleksi",
-  "_release": "0.3.2",
+  "_release": "0.3.4",
   "_resolution": {
     "type": "version",
-    "tag": "v0.3.2",
-    "commit": "b8b71accabf2287b4ac12b6f48f6a874710b5686"
+    "tag": "v0.3.4",
+    "commit": "2c45aaea798f908922baec601cd8149aa168935b"
   },
   "_source": "https://github.com/yoannisj/sass-aleksi.git",
-  "_target": "^0.3.2",
+  "_target": "^0.3.4",
   "_originalSource": "sass-aleksi",
   "_direct": true
 }

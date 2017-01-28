@@ -5,8 +5,8 @@
 //// @group lilo-settings
 //// @author [Yoannis Jamar](http://yoannis.me)
 
-$lilo-strict: false !default;
+$lilo-strict-mode: false !default;
 
-$lilo-report-strategy: 'summary' !default;
+$lilo-report-method: 'warn' !default;
 
 $lilo-default-quota: 10 !default;

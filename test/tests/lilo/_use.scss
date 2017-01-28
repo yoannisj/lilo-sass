@@ -4,11 +4,13 @@
 
 @import "lilo/add";
 @import "lilo/use";
+@import "lilo/quota";
 
 @include test-module('The lilo-use mixin')
 {
   $id-a: 'test-#{unique-id()}';
   $id-b: 'test-#{unique-id()}';
+  $id-c: 'test-#{unique-id()}';
   $args-a: ("foo", false, 100);
 
   @include test('should extend styles created with add() before')
@@ -71,4 +73,42 @@
     }
   }
 
+  @include test('should update the given identifier\'s usage count')
+  {
+    // prepare test
+    @include lilo-add($id-a);
+
+    // inspect before
+    $id-a-count-before: lilo-quota-count($id-a);
+
+    // perform test
+    @include lilo-use($id-a);
+    @include lilo-use($id-a);
+
+    // inspect after
+    $id-a-count-after: lilo-quota-count($id-a);
+
+    @include assert-equal($id-a-count-before, $id-a-count-after - 2);
+  }
+
+  @include test('should throw a warning if exceeding the identifier\'s usage limit')
+  {
+    // prepare test
+    $lilo-report-method-before: $lilo-report-method;
+    $lilo-report-method: 'warn';
+    @include lilo-quota-limit($id-c, 2);
+    @include lilo-add($id-c);
+
+    // perform test
+    @include output
+    {
+      @include lilo-use($id-c);
+      @include lilo-use($id-c);
+      @include lilo-use($id-c);
+      @include lilo-use($id-c);
+    }
+
+    // cleanup test
+    $lilo-report-method: $lilo-report-method-before;
+  }
 }

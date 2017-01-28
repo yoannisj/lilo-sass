@@ -65,7 +65,7 @@ $__lilo-quota-count__: () !default;
   @if type-of($diff) != 'null' {
     // in/decrease the current count by the given difference
     $new-count: $curr-count + $diff;
-    $__lilo-quota-count__: map-set($__lilo-quota-count__, $identifier, $new-count);
+    $__lilo-quota-count__: map-set($__lilo-quota-count__, $identifier, $new-count) !global;
   }
 
   // return the current count
@@ -99,7 +99,7 @@ $__lilo-quota-count__: () !default;
 /// @access public
 /// @since 0.2.0
 
-@mixin lilo-quota-count($identifier, $limit)
+@mixin lilo-quota-count($identifier, $diff)
 {
-  $count: lilo-quota($identifier, $limit);
+  $count: lilo-quota($identifier, $diff);
 }
