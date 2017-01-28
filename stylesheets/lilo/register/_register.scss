@@ -7,6 +7,7 @@
 
 @import "sassy-maps";
 @import "aleksi/general/throw";
+@import "lilo/register/params";
 @import "lilo/register/fetch";
 
 $__lilo-register__: () !default;
@@ -35,9 +36,13 @@ $__lilo-register__: () !default;
 
   // only add a new entry if none was already registered before with
   // same identifier and arguments
-  @if not _lilo-fetch($identifier, $args...) {
+  @if not _lilo-fetch($identifier, $args...)
+  {
+    // get full parameters string
+    $params: _lilo-register-params($args);
+
     // add the entry to Lilo's register and return `true` to communicate success
-    $__lilo-register__: map-set-deep($__lilo-register__, $identifier unique-id(), $args) !global;
+    $__lilo-register__: map-set-deep($__lilo-register__, $identifier unique-id(), $params) !global;
     @return true;
   }
 

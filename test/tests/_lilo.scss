@@ -11,6 +11,12 @@
 @import "tests/lilo/use";
 @import "tests/lilo/share";
 
+// CROSS-MEDIA
+// TODO: test quota limits in context
+// TODO: test 'share' in context
+// TODO: test 'add' in context
+@import "tests/lilo/context";
+
 // SUMMARY
 @import "lilo/report";
 @include lilo-report-summary();

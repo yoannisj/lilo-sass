@@ -1,0 +1,104 @@
+
+@import "lilo/add";
+@import "lilo/use";
+
+$lilo-context-getter: '_get-current-context-str';
+
+$__current-context__: null;
+
+@function _get-current-context-str() {
+  @return $__current-context__;
+}
+
+@include test-module('in-context usage')
+{
+  $id-a: 'test-#{unique-id()}';
+  $args-a: ('hello', true, 10);
+
+  @include test('should count usage for current context only')
+  {
+    @include assert
+    {
+      @include output
+      {
+        // add styles in context
+        $__current-context__: null !global;
+        @include lilo-add($id-a) {}
+
+        // use styles in context and compare count
+        count-pre-before: #{lilo-quota-count($id-a)};
+        @include lilo-use($id-a);
+        count-pre-after: #{lilo-quota-count($id-a)};
+
+        @media (min-width: 300px)
+        {
+          // add styles in context
+          $__current-context__: '>300' !global;
+          @include lilo-add($id-a) {}
+
+          // use styles in context and compare count
+          count-mq-before: #{lilo-quota-count($id-a)};
+          @include lilo-use($id-a);
+          count-mq-after: #{lilo-quota-count($id-a)};
+
+          $count-mq-a-after: lilo-quota-count($id-a);
+        }
+
+        // use styles in context and compare count
+        count-post-before: #{lilo-quota-count($id-a)};
+        @include lilo-use($id-a);
+        count-post-after: #{lilo-quota-count($id-a)};
+
+        $__current-context__: null !global;
+      }
+
+      @include expect
+      {
+        count-pre-before: 0;
+        count-pre-after: 1;
+
+        @media (min-width: 300px)
+        {
+          count-mq-before: 0;
+          count-mq-after: 1;
+        }
+
+        count-post-before: 1;
+        count-post-after: 2;
+      }
+
+    }
+  }
+
+  @include test('should work with media queries')
+  {
+    @include assert
+    {
+      @include output
+      {
+        @media (min-width: 300px)
+        {
+          $__current-context__: '>300' !global;
+
+          @include lilo-add('test-abc') {
+            content: 'CSS for test-abc (in mq)';
+          }
+
+          @include lilo-use('test-abc'); // includes styles added above
+        }
+
+        $__current-context__: null !global;
+        @include lilo-use('test-abc'); // throws 'styles not found' warning
+      }
+
+      @include expect
+      {
+        @media (min-width: 300px)
+        {
+          content: 'CSS for test-abc (in mq)';
+        }
+      }
+
+    }
+  }
+}

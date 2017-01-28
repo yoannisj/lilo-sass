@@ -59,13 +59,15 @@ $__lilo-quota-count__: () !default;
 @function lilo-quota-count($identifier, $diff: null)
 {
   // get current count
-  $curr-count: default-to(map-get($__lilo-quota-count__, $identifier), 0);
+  $context: if($lilo-context-getter, call($lilo-context-getter), 'default');
+  $curr-count: map-get-deep($__lilo-quota-count__, $identifier, $context);
+  $curr-count: default-to($curr-count, 0);
 
   // return current count if no difference was given
   @if type-of($diff) != 'null' {
     // in/decrease the current count by the given difference
     $new-count: $curr-count + $diff;
-    $__lilo-quota-count__: map-set($__lilo-quota-count__, $identifier, $new-count) !global;
+    $__lilo-quota-count__: map-set-deep($__lilo-quota-count__, $identifier $context, $new-count) !global;
   }
 
   // return the current count
