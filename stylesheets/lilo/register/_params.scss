@@ -1,0 +1,26 @@
+// =============================================================================
+// =LILO - REGISTER
+// =============================================================================
+////
+//// @group lilo-register
+//// @author [Yoannis Jamar](http://yoannis.me)
+
+@import "lilo/settings";
+
+// =_lilo-register-params($args)
+// -----------------------------------------------------------------------------
+/// Returns the complete and formatted parameters for the given style arguments,
+/// as used to register an identifier variant. This includes things such as
+/// the context in which the style is used, etc.
+///
+/// @param {list} $args - The list of style arguments used
+/// @return {bool} - The complete and formatted parameters that correspond
+///
+/// @access private
+/// @since 0.2.0
+
+@function _lilo-register-params($args)
+{
+  $context: if($lilo-context-getter, call($lilo-context-getter), 'default');
+  @return '#{$args}||#{$context}';
+}

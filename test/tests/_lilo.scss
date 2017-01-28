@@ -11,6 +11,9 @@
 @import "tests/lilo/use";
 @import "tests/lilo/share";
 
+// CROSS-MEDIA
+@import "tests/lilo/context";
+
 // SUMMARY
 @import "lilo/report";
 @include lilo-report-summary();

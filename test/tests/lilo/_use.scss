@@ -52,7 +52,7 @@
     }
   }
 
-  @include test('should not extend and throw a warning if styles were not created before')
+  @include test('should throw a warning if styles were not created before')
   {
     @include assert('(without arguments)')
     {

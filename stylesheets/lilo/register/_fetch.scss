@@ -7,6 +7,7 @@
 
 @import "aleksi/general/throw";
 @import "aleksi/maps/map-find";
+@import "lilo/register/params";
 
 $__lilo-register__: () !default;
 
@@ -30,8 +31,10 @@ $__lilo-register__: () !default;
     @return throw-error('_lilo-register():: $identifier must be a string. Was #{inspect($identifier)}.');
   }
 
+  // get identifier's register entry, and full parameters string
   $entry: map-get($__lilo-register__, $identifier);
+  $params: _lilo-register-params($args);
 
   // return token corresponding to the `$identifier`, `$args` pair.
-  @return if($entry, map-find-key($entry, $args), null);
+  @return if($entry, map-find-key($entry, $params), null);
 }
