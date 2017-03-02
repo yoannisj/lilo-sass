@@ -6,6 +6,7 @@
 //// @author [Hugo Giraudel]((http://hugogiraudel.com)
 
 @import "aleksi/general/throw";
+@import "aleksi/general/define";
 
 $constants: () !default;
 
@@ -31,4 +32,12 @@ $constants: () !default;
   }
 
   @return map-get($constants, $name);
+}
+
+// =const( $name, $value )
+// -----------------------------------------------------------------------------
+/// @alias {function} const
+
+@mixin const($name, $value) {
+  $c: const($name, $value);
 }

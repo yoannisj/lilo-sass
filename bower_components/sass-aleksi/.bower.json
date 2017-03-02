@@ -1,6 +1,6 @@
 {
   "name": "sass-aleksi",
-  "version": "0.3.4",
+  "version": "0.4.1",
   "authors": [
     "Yoannis Jamar <yoannis.j@gmail.com>"
   ],
@@ -26,18 +26,17 @@
     "sassdoc"
   ],
   "dependencies": {
-    "SassyLists": "~2.2.4",
-    "sassy-maps": "~0.4.0"
+    "SassyLists": "~3.0.1"
   },
   "homepage": "https://github.com/yoannisj/sass-aleksi",
-  "_release": "0.3.4",
+  "_release": "0.4.1",
   "_resolution": {
     "type": "version",
-    "tag": "v0.3.4",
-    "commit": "2c45aaea798f908922baec601cd8149aa168935b"
+    "tag": "v0.4.1",
+    "commit": "0c26699764b3175b2601561613709bb1bf1c7db0"
   },
   "_source": "https://github.com/yoannisj/sass-aleksi.git",
-  "_target": "^0.3.4",
+  "_target": "^0.4.1",
   "_originalSource": "sass-aleksi",
   "_direct": true
 }

@@ -5,8 +5,10 @@
 //// @group lilo-share
 //// @author [Yoannis Jamar](http://yoannis.me)
 
-@import "sassy-maps";
 @import "aleksi/general/default-to";
+@import "aleksi/maps/map-set";
+@import "aleksi/maps/map-set-deep";
+@import "aleksi/maps/map-get-deep";
 @import "lilo/settings";
 
 $__lilo-quota-limits__: () !default;
@@ -60,7 +62,7 @@ $__lilo-quota-count__: () !default;
 {
   // get current count
   $context: if($lilo-context-getter, call($lilo-context-getter), 'default');
-  $curr-count: map-get-deep($__lilo-quota-count__, $identifier, $context);
+  $curr-count: map-get-deep($__lilo-quota-count__, $identifier, '#{$context}');
   $curr-count: default-to($curr-count, 0);
 
   // return current count if no difference was given

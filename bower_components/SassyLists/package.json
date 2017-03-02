@@ -1,10 +1,12 @@
 {
-  "name": "SassyLists",
+  "name": "sassy-lists",
   "title": "SassyLists",
-  "version": "2.2.5",
+  "version": "3.0.1",
   "description": "A Sass API for lists.",
   "scripts": {
-    "test": "grunt test"
+    "build": "rm -rf dist/ && mkdir dist/ && cat stylesheets/**/* > dist/_SassyLists.scss",
+    "test": "mocha test/index.js",
+    "prepublish": "npm test"
   },
   "repository": {
     "type": "git",
@@ -14,19 +16,26 @@
     "sass",
     "scss",
     "list",
-    "lists"
+    "lists",
+    "eyeglass-module"
   ],
   "author": "Hugo Giraudel",
+  "main": "stylesheets/_SassyLists.scss",
+  "style": "stylesheets/_SassyLists.scss",
+  "eyeglass": {
+    "name": "SassyLists",
+    "sassDir": "stylesheets",
+    "needs": "*",
+    "exports": false
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/at-import/SassyLists/issues"
   },
   "homepage": "https://at-import.github.io/SassyLists",
   "devDependencies": {
-    "grunt-contrib-sass": "~0.7.2",
-    "grunt": "~0.4.2",
-    "bootcamp": "~1.1.4",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-concat": "~0.3.0"
+    "mocha": "^2.3.4",
+    "sass-true": "^2.0.3",
+    "sassdoc": "^2.1.19"
   }
 }

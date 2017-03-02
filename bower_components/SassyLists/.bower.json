@@ -1,6 +1,6 @@
 {
   "name": "SassyLists",
-  "version": "2.2.5",
+  "version": "3.0.1",
   "homepage": "https://github.com/at-import/SassyLists",
   "authors": [
     "Hugo Giraudel"
@@ -21,13 +21,13 @@
     "test",
     "tests"
   ],
-  "_release": "2.2.5",
+  "_release": "3.0.1",
   "_resolution": {
     "type": "version",
-    "tag": "2.2.5",
-    "commit": "e83f3c223a42257928a168de9d0b9e89fb4108b2"
+    "tag": "3.0.1",
+    "commit": "90e4e7023fa60767dc6e7827c656198927c64713"
   },
   "_source": "https://github.com/Team-Sass/SassyLists.git",
-  "_target": "~2.2.4",
+  "_target": "~3.0.1",
   "_originalSource": "SassyLists"
 }

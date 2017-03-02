@@ -1,5 +1,7 @@
 # Changelog
 
+* `3.0.1`: added Eyeglass support and fixed a minor issue in `sl-walk()`
+* `3.0.0`: using `@error` instead of `@warn`, restructuration of structure and tests
 * `2.2.5`: changing C-style comments to inline comments
 * `2.2.4`: fixing a documentation error
 * `2.2.3`: adding examples to documentation

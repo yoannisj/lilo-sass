@@ -26,7 +26,6 @@
     "tests"
   ],
   "dependencies": {
-    "sassy-maps": "^0.4.0",
-    "sass-aleksi": "^0.3.4"
+    "sass-aleksi": "^0.4.1"
   }
 }

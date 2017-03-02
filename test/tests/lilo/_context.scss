@@ -26,9 +26,9 @@ $__current-context__: null;
         @include lilo-add($id-a) {}
 
         // use styles in context and compare count
-        count-pre-before: #{lilo-quota-count($id-a)};
+        $count-pre-before: #{lilo-quota-count($id-a)};
         @include lilo-use($id-a);
-        count-pre-after: #{lilo-quota-count($id-a)};
+        $count-pre-after: #{lilo-quota-count($id-a)};
 
         @media (min-width: 300px)
         {
@@ -37,34 +37,34 @@ $__current-context__: null;
           @include lilo-add($id-a) {}
 
           // use styles in context and compare count
-          count-mq-before: #{lilo-quota-count($id-a)};
+          $count-mq-before: #{lilo-quota-count($id-a)};
           @include lilo-use($id-a);
-          count-mq-after: #{lilo-quota-count($id-a)};
+          $count-mq-after: #{lilo-quota-count($id-a)};
 
           $count-mq-a-after: lilo-quota-count($id-a);
         }
 
         // use styles in context and compare count
-        count-post-before: #{lilo-quota-count($id-a)};
+        $count-post-before: #{lilo-quota-count($id-a)};
         @include lilo-use($id-a);
-        count-post-after: #{lilo-quota-count($id-a)};
+        $count-post-after: #{lilo-quota-count($id-a)};
 
         $__current-context__: null !global;
       }
 
       @include expect
       {
-        count-pre-before: 0;
-        count-pre-after: 1;
+        $count-pre-before: 0;
+        $count-pre-after: 1;
 
         @media (min-width: 300px)
         {
-          count-mq-before: 0;
-          count-mq-after: 1;
+          $count-mq-before: 0;
+          $count-mq-after: 1;
         }
 
-        count-post-before: 1;
-        count-post-after: 2;
+        $count-post-before: 1;
+        $count-post-after: 2;
       }
 
     }

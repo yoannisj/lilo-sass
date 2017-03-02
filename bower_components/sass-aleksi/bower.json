@@ -1,6 +1,6 @@
 {
   "name": "sass-aleksi",
-  "version": "0.3.4",
+  "version": "0.4.1",
   "authors": [
     "Yoannis Jamar <yoannis.j@gmail.com>"
   ],
@@ -26,7 +26,6 @@
     "sassdoc"
   ],
   "dependencies": {
-    "SassyLists": "~2.2.4",
-    "sassy-maps": "~0.4.0"
+    "SassyLists": "~3.0.1"
   }
 }
